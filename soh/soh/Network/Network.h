@@ -1,13 +1,12 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 #ifdef __cplusplus
-
+#include <atomic>
 #include <thread>
 #ifdef ENABLE_REMOTE_CONTROL
 #include <SDL2/SDL_net.h>
 #endif
 #include <nlohmann/json.hpp>
-
 class Network {
   private:
 #ifdef ENABLE_REMOTE_CONTROL
@@ -16,15 +15,12 @@ class Network {
 #endif
     std::thread receiveThread;
     std::string receivedData;
-
     void ReceiveFromServer();
     void HandleRemoteData(char payload[512]);
     void HandleRemoteJson(std::string payload);
-
   public:
-    bool isEnabled;
-    bool isConnected;
-
+    std::atomic<bool> isEnabled { false };
+    std::atomic<bool> isConnected { false };
     void Enable(const char* host, uint16_t port);
     void Disable();
     /**
@@ -48,6 +44,5 @@ class Network {
     void SendDataToRemote(const char* payload);
     virtual void SendJsonToRemote(nlohmann::json packet);
 };
-
 #endif // __cplusplus
 #endif // NETWORK_H
