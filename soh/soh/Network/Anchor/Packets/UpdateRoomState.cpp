@@ -52,4 +52,9 @@ void Anchor::HandlePacket_UpdateRoomState(nlohmann::json payload) {
     roomState.showLocationsMode = payload["state"]["showLocationsMode"].get<u8>();
     roomState.teleportMode = payload["state"]["teleportMode"].get<u8>();
     roomState.syncItemsAndFlags = payload["state"]["syncItemsAndFlags"].get<u8>();
+
+    // If we just connected and have a save loaded, request team state now that we know sync settings
+    if (IsSaveLoaded() && isConnected) {
+        SendPacket_RequestTeamState();
+    }
 }
