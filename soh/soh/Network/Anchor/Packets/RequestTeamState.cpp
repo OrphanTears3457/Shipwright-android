@@ -17,7 +17,7 @@
  */
 
 void Anchor::SendPacket_RequestTeamState() {
-    if (!IsSaveLoaded() || !roomState.syncItemsAndFlags) {
+    if (!IsSaveLoaded()) {
         return;
     }
 
