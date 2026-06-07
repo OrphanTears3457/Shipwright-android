@@ -89,8 +89,9 @@ void Anchor::RegisterHooks() {
     });
 
     COND_HOOK(OnPlayerUpdate, isConnected, [&]() {
-        if (justLoadedSave) {
+        if (justLoadedSave || needsTeamStateSync) {
             justLoadedSave = false;
+            needsTeamStateSync = false;
             SendPacket_RequestTeamState();
         }
 
