@@ -26,6 +26,7 @@ void Anchor::HandlePacket_AllClientState(nlohmann::json payload) {
             clients[client.clientId].self = true;
             if (needsTeamStateSync) {
                 needsTeamStateSync = false;
+                SendPacket_UpdateClientState();
                 SendPacket_RequestTeamState();
             }
         } else {
