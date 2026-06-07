@@ -75,6 +75,7 @@ class Anchor : public Network {
     bool justLoadedSave = false;
     bool isHandlingUpdateTeamState = false;
     bool isProcessingIncomingPacket = false;
+    bool needsTeamStateSync = false;
     std::queue<nlohmann::json> incomingPacketQueue;
     std::mutex incomingPacketQueueMutex;
     std::queue<nlohmann::json> outgoingPacketQueue;

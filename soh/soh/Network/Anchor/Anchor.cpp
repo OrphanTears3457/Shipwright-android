@@ -28,12 +28,9 @@ void Anchor::Disable() {
 }
 
 void Anchor::OnConnected() {
+    needsTeamStateSync = true;
     SendPacket_Handshake();
     RegisterHooks();
-
-    if (IsSaveLoaded()) {
-        SendPacket_RequestTeamState();
-    }
 }
 
 void Anchor::OnDisconnected() {
