@@ -24,6 +24,10 @@ void Anchor::HandlePacket_AllClientState(nlohmann::json payload) {
             CVarSetInteger(CVAR_REMOTE_ANCHOR("LastClientId"), ownClientId);
             Ship::Context::GetInstance()->GetWindow()->GetGui()->SaveConsoleVariablesNextFrame();
             clients[client.clientId].self = true;
+            if (needsTeamStateSync) {
+                needsTeamStateSync = false;
+                SendPacket_RequestTeamState();
+            }
         } else {
             clients[client.clientId].self = false;
             if (clients.contains(client.clientId)) {
